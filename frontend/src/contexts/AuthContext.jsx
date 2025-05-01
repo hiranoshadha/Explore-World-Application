@@ -7,15 +7,21 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true); // Add loading state
   const navigate = useNavigate();
 
   // Check if user is already logged in on app initialization
   useEffect(() => {
-    const storedUser = localStorage.getItem('currentUser');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setIsAuthenticated(true);
-    }
+    const checkAuth = () => {
+      const storedUser = localStorage.getItem('currentUser');
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+        setIsAuthenticated(true);
+      }
+      setLoading(false); // Mark loading as complete regardless of outcome
+    };
+    
+    checkAuth();
   }, []);
 
   const register = (userData) => {
@@ -44,12 +50,9 @@ export const AuthProvider = ({ children }) => {
 
   const login = (credentials) => {
     const users = JSON.parse(localStorage.getItem('users')) || [];
-    //console.log("User", users);
     const user = users.find(
       user => user.email === credentials.email && user.password === credentials.password
     );
-
-    
     
     if (user) {
       // Store current user in localStorage and state
@@ -93,6 +96,7 @@ export const AuthProvider = ({ children }) => {
       value={{ 
         user, 
         isAuthenticated, 
+        loading, // Include loading in the context
         register, 
         login, 
         logout,
