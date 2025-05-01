@@ -4,9 +4,9 @@ import { useAuth } from '../../hooks/useAuth';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user, loading } = useAuth();
-  console.log("isAuthenticated in ProtectedRoute:", isAuthenticated);
-  console.log("User in ProtectedRoute:", user);
-  console.log("Loading in ProtectedRoute:", loading);
+  // console.log("isAuthenticated in ProtectedRoute:", isAuthenticated);
+  // console.log("User in ProtectedRoute:", user);
+  // console.log("Loading in ProtectedRoute:", loading);
 
   // Show nothing while checking authentication status
   if (loading) {
