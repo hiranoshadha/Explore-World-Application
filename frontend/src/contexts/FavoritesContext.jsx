@@ -11,13 +11,14 @@ export const FavoritesProvider = ({ children }) => {
   // Initialize favorites from user data when authenticated
   useEffect(() => {
     if (isAuthenticated && user) {
+      console.log("User", user);
       setFavorites(user.favorites || []);
     } else {
       // For non-authenticated users, use localStorage directly
       const savedFavorites = localStorage.getItem('guestFavorites');
       setFavorites(savedFavorites ? JSON.parse(savedFavorites) : []);
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated]);
 
  // Save favorites when they change
   useEffect(() => {
